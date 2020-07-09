@@ -19,11 +19,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::apiresource('article', 'ArticleController');
+//Route::apiresource('article', 'ArticleController');
 
-//CRUD Categories
-Route::get('/categories', 'ArticleController@categories');
-Route::post('/categories/add', 'ArticleController@addcategories');
-Route::get('/categories/delete/{id}', 'ArticleController@deletecategories');
-Route::post('/categories/update/{id}', 'ArticleController@updatecategories');
-
+Route::resources([
+    'users' => 'userController',
+]);
