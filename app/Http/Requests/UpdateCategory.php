@@ -8,7 +8,7 @@ use Illuminate\Http\Exceptions\HttpResponseException;
 
 
 
-class StoreCategory extends FormRequest
+class UpdateCategory extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -28,7 +28,8 @@ class StoreCategory extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|unique:categories',
-        ];
+            'name'  => 'sometimes|required|string'
+
+            ];
     }
 }
