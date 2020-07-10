@@ -2,15 +2,11 @@
 
 namespace App\Http\Controllers\API\V1;
 
-use App\Models\Category;
-use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCategory;
 use App\Http\Requests\UpdateCategory;
-use App\Http\Controllers\Controller;
-
-
-
-
+use App\Models\Category;
+use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
@@ -22,64 +18,55 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = Category::get();
-            return response($categories);     
+        return response($categories);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  StoreCategory $request
      * @return \Illuminate\Http\Response
      */
     public function store(StoreCategory $request)
     {
-       
-
         $category = Category::create($request->only('name'));
-
-        return response()->json(['msg' => 'Added'], 201);
+        return response()->json(['msg' => 'Category Added'], 201);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Category  $category
+     * @param  \App\Models\Category $category
      * @return \Illuminate\Http\Response
      */
     public function show(Category $category)
     {
-        return response( $category);     
+        return response($category);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Category  $category
+     * @param  UpdateCategory $request
+     * @param  \App\Models\Category $category
      * @return \Illuminate\Http\Response
      */
 
     public function update(UpdateCategory $request, Category $category)
     {
-          
         $category->update($request->only('name'));
         return response()->json(['msg' => 'Updated'], 201);
-
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Category  $category
+     * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
     public function destroy(Category $category)
     {
-        
-            // hapus data
-            $category->delete();
-            
-            return response("deleted");
-    
+        $category->delete();
+        return response()->json(['msg' => 'Category Deleted'], 201);
     }
 }

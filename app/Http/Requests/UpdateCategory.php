@@ -3,10 +3,6 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Contracts\Validation\Validator;
-use Illuminate\Http\Exceptions\HttpResponseException;
-
-
 
 class UpdateCategory extends FormRequest
 {
@@ -28,8 +24,7 @@ class UpdateCategory extends FormRequest
     public function rules()
     {
         return [
-            'name'  => 'sometimes|required|string'
-
-            ];
+            'name' => 'sometimes|required|string',
+        ];
     }
 }
