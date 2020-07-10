@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API\V1;
 
-use App\User;
-use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUser;
-use File;
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -17,18 +18,7 @@ class UserController extends Controller
     public function index()
     {
         $users = User::get();
-        return $users;       
-
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return $users;
     }
 
     /**
@@ -39,16 +29,12 @@ class UserController extends Controller
      */
     public function store(StoreUser $request)
     {
-        
-            $validated = $request->validated();
-    
-            User::create([
-                'id' => $request->id,
-                'name' => $request->name,
-                'email' => $request->email,
-                'password' => $request->password,
-            ]);
-            return response()->json('Added');
+        $data = $request->only('name', 'email');
+        $data['password'] = Hash::make($request->password);
+
+        $user = User::create($data);
+
+        return response()->json(['msg' => 'Added'], 201);
     }
 
     /**
@@ -59,9 +45,9 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        
-        User::where('id',$user->id)->get();
-        return $user;       
+
+        User::where('id', $user->id)->get();
+        return $user;
     }
 
     /**
@@ -84,14 +70,13 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        User::where('id',$user->id)->update([
+        User::where('id', $user->id)->update([
             'id' => $request->id,
             'name' => $request->name,
             'email' => $request->email,
             'password' => $request->password,
         ]);
         return response()->json('Updated');
-
 
     }
 
@@ -103,12 +88,11 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        
-        
-            // hapus data
-            User::where('id',$user->id)->delete();
-            
-            return response()->json('Deleted');
-    
+
+        // hapus data
+        User::where('id', $user->id)->delete();
+
+        return response()->json('Deleted');
+
     }
 }

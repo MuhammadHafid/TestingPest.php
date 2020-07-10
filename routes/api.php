@@ -19,8 +19,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-//Route::apiresource('article', 'ArticleController');
 
-Route::resources([
-    'users' => 'userController',
-]);
+Route::apiResource('users', 'API\V1\UserController');
