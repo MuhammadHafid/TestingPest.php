@@ -55,13 +55,13 @@ class CategoryController extends Controller
     public function update(UpdateCategory $request, Category $category)
     {
         $category->update($request->only('name'));
-        return response()->json(['msg' => 'Updated'], 201);
+        return response()->json(['msg' => 'Category Updated'], 201);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Category  $category
+     * @param  \App\Models\Category $category
      * @return \Illuminate\Http\Response
      */
     public function destroy(Category $category)
