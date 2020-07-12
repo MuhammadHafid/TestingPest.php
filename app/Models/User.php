@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Model
 {
-
     use SoftDeletes;
 
     protected $fillable = [
@@ -16,4 +15,12 @@ class User extends Model
     protected $hidden = [
         'password',
     ];
+
+    protected $dates = ['deleted_at'];
+
+    public function article()
+    {
+
+        return $this->hasMany('App\Article');
+    }
 }
