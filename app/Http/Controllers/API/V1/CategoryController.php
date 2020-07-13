@@ -30,7 +30,7 @@ class CategoryController extends Controller
     public function store(StoreCategory $request)
     {
         $category = Category::create($request->only('name'));
-        return response()->json(['msg' => 'Category Added'], 201);
+        return response()->json(['msg' => 'Category Added', 'data' => $category], 201);
     }
 
     /**
@@ -55,7 +55,7 @@ class CategoryController extends Controller
     public function update(UpdateCategory $request, Category $category)
     {
         $category->update($request->only('name'));
-        return response()->json(['msg' => 'Category Updated'], 201);
+        return response()->json(['msg' => 'Category Updated', 'data' => $category], 201);
     }
 
     /**
