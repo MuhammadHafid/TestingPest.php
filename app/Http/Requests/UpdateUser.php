@@ -26,7 +26,7 @@ class UpdateUser extends FormRequest
         return [
             'name' => 'sometimes|string',
             'email' => 'sometimes|required|unique:users|email',
-            'password' => 'sometimes|required|string|confirmed',
+            'password' => 'sometimes|required|string',
         ];
     }
 }

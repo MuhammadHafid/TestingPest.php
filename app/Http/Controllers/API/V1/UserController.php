@@ -36,7 +36,7 @@ class UserController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
-        return response()->json(['msg' => 'User telah ditambahkan', 'data' => $user], 201);
+        return response()->json(['msg' => 'User Added', 'data' => $user], 201);
     }
     /**
      * Display the specified resource.
