@@ -19,7 +19,14 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::apiresources([
-    'categories' => 'API\V1\CategoryController',
-    'users' => 'API\V1\UserController',
-]);
+Route::group(['namespace' => 'API\V1'], function () {
+    Route::post('login', 'AuthController@login');
+    
+    Route::group(['middleware' => 'auth'], function () {
+        Route::apiResource('categories', 'CategoryController');
+        Route::apiResource('users', 'UserController');
+        Route::post('logout', 'AuthController@logout');
+        Route::post('refresh', 'AuthController@refresh');
+        Route::post('me', 'AuthController@me');
+    });
+});
