@@ -25,8 +25,8 @@ Route::group(['namespace' => 'API\V1'], function () {
     Route::group(['middleware' => 'auth'], function () {
         Route::apiResource('categories', 'CategoryController');
         Route::apiResource('users', 'UserController');
+        Route::apiResource('article', 'ArticleController');
         Route::post('logout', 'AuthController@logout');
-        Route::post('refresh', 'AuthController@refresh');
         Route::post('me', 'AuthController@me');
     });
 });
