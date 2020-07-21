@@ -3,7 +3,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Support\Facades\Auth;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -20,13 +20,22 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::group(['namespace' => 'API\V1'], function () {
-    Route::post('login', 'AuthController@login');
-    
     Route::group(['middleware' => 'auth'], function () {
-        Route::apiResource('categories', 'CategoryController');
-        Route::apiResource('users', 'UserController');
-        Route::apiResource('article', 'ArticleController');
-        Route::post('logout', 'AuthController@logout');
-        Route::post('me', 'AuthController@me');
-    });
+        Route::apiResource('articles', 'ArticleController')->only([
+            'store', 'update', 'destroy'
+        ]);
+
+        Route::post('logout', 'AuthController@logout')->name('auth.logout');
+    });     
+
+    Route::apiResource('articles', 'ArticleController')->only([
+        'index', 'show'
+    ]);
+
+    Route::apiResource('users', 'UserController');
+    
+    Route::apiResource('categories', 'CategoryController');
+
+    Route::post('login', 'AuthController@login')->name('auth.login');
 });
+
