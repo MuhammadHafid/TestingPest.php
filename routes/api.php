@@ -25,17 +25,16 @@ Route::group(['namespace' => 'API\V1'], function () {
             'store', 'update', 'destroy'
         ]);
 
+        Route::post('me', 'AuthController@me')->name('auth.me');
+
         Route::post('logout', 'AuthController@logout')->name('auth.logout');
     });     
 
     Route::apiResource('articles', 'ArticleController')->only([
         'index', 'show'
     ]);
-
     Route::apiResource('users', 'UserController');
-    
     Route::apiResource('categories', 'CategoryController');
-
     Route::post('login', 'AuthController@login')->name('auth.login');
 });
 

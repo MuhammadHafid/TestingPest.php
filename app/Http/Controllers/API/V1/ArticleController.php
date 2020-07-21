@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers\API\V1;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Article;
 use App\Http\Requests\StoreArticle;
 use App\Http\Requests\UpdateArticle;
+use App\Models\Article;
+use Illuminate\Http\Request;
 
 class ArticleController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
@@ -17,7 +18,7 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        $article = Article::with(['user','category'])->get();
+        $article = Article::with(['user', 'category'])->get();
         return response()->json(['Data Article' => $article], 200);
     }
 
@@ -33,7 +34,7 @@ class ArticleController extends Controller
         $data['user_id'] = auth()->user()->id;
 
         $article = Article::create($data);
-        return response()->json(['msg' => 'Article Added', 'data' => $article],201);
+        return response()->json(['msg' => 'Article Added', 'data' => $article], 201);
     }
 
     /**
@@ -44,7 +45,7 @@ class ArticleController extends Controller
      */
     public function show(Article $article)
     {
-        return response()->json(['data' => $article],200);
+        return response()->json(['data' => $article], 200);
     }
 
     /**
@@ -58,9 +59,9 @@ class ArticleController extends Controller
     {
         $article->update([
             'title' => $request->title,
-            'content' => $request->content
+            'content' => $request->content,
         ]);
-        return response()->json(['msg' => 'Article Updated', 'data' => $article],201);
+        return response()->json(['msg' => 'Article Updated', 'data' => $article], 201);
     }
 
     /**
@@ -70,8 +71,12 @@ class ArticleController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy(Article $article)
-    {   
-        $article->delete();  
-        return response()->json(['msg' => "Article Deleted"],200);
+    {
+        if ($article->user_id != auth()->user()->id) {
+            return response()->json(['msg' => "can't be deleted"]);
+        }
+
+        $article->delete();
+        return response()->json(['msg' => "Article Deleted"], 200);
     }
 }
