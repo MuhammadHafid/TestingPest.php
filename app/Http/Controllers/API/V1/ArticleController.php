@@ -45,6 +45,8 @@ class ArticleController extends Controller
      */
     public function show(Article $article)
     {
+        $article->load('comment');
+
         return response()->json(['data' => $article], 200);
     }
 
