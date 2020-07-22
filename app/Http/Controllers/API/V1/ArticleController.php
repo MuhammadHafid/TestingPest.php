@@ -73,7 +73,7 @@ class ArticleController extends Controller
     public function destroy(Article $article)
     {
         if ($article->user_id != auth()->user()->id) {
-            return response()->json(['msg' => "can't be deleted"]);
+            return response()->json(['msg' => "Invalid Article Author"]);
         }
 
         $article->delete();
