@@ -19,9 +19,13 @@ class CommentController extends Controller
      */
     public function index(Request $request, Comment $comment)
     {
-        $comment = Comment::with(['user', 'article'])->get();
+        $sortBy = $request->query('sortby') == 'oldest' ? 'ASC' : 'DESC';
 
-        return response()->json(['data' => $comment], 200);
+        $comments = $comment
+            ->orderBy('created_at', $sortBy)
+            ->paginate(10);
+
+        return response()->json(['data' => $comments], 200);
     }
 
     /**
@@ -60,7 +64,7 @@ class CommentController extends Controller
     public function destroy(Comment $comment)
     {
         if ($comment->user_id != auth()->user()->id) {
-            return response()->json(['msg' => 'can not be deleted']);
+            return response()->json(['msg' => 'Invalid Comment Author']);
         }
 
         $comment->delete();

@@ -20,7 +20,7 @@ class Article extends Model
         return $this->belongsTo('App\Models\Category');
     }
 
-    public function comment()
+    public function comments()
     {
         return $this->hasMany('App\Models\Comment');
     }
