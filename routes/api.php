@@ -1,8 +1,9 @@
 
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,11 +16,13 @@ use Illuminate\Support\Facades\Route;
 |
  */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::group(['namespace' => 'API\V1'], function () {
+    Route::apiResource('users', 'UserController');
+    Route::apiResource('categories', 'CategoryController');
+    Route::post('login', 'AuthController@login')->name('auth.login');
 
-Route::apiresources([
-    'categories' => 'API\V1\CategoryController',
-    'users' => 'API\V1\UserController',
-]);
+    Route::group(['middleware' => 'auth:api'], function () {
+        Route::post('me', 'AuthController@me')->name('auth.me');
+        Route::post('logout', 'AuthController@logout')->name('auth.logout');
+    });
+});
