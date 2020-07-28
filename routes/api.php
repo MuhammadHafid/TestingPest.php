@@ -20,7 +20,7 @@ Route::group(['namespace' => 'API\V1'], function () {
         ]);
 
         Route::apiResource('comments', 'CommentController')->only([
-            'store', 'delete',
+            'store', 'destroy',
         ]);
 
         Route::post('me', 'AuthController@me')->name('auth.me');

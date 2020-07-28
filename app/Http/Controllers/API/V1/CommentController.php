@@ -17,11 +17,11 @@ class CommentController extends Controller
      * @param \App\Models\Comment $comment
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request, Comment $comment)
+    public function index(Request $request)
     {
         $sortBy = $request->query('sortby') == 'oldest' ? 'ASC' : 'DESC';
 
-        $comments = $comment
+        $comments = Comment::with(['user', 'article'])
             ->orderBy('created_at', $sortBy)
             ->paginate(10);
 
@@ -64,7 +64,7 @@ class CommentController extends Controller
     public function destroy(Comment $comment)
     {
         if ($comment->user_id != auth()->user()->id) {
-            return response()->json(['msg' => 'Invalid Comment Author']);
+            return response()->json(['msg' => 'Invalid Comment Author'], 403);
         }
 
         $comment->delete();
