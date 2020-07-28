@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
-
     /**
      * Get a JWT via given credentials.
      *
@@ -45,7 +44,7 @@ class AuthController extends Controller
     {
         auth()->logout();
 
-        return response()->json(['message' => 'Logout account']);
+        return response()->json(['message' => 'Logged out']);
     }
 
 

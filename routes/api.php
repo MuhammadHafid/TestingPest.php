@@ -1,9 +1,10 @@
 
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -15,12 +16,8 @@ use Illuminate\Support\Facades\Auth;
 |
  */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
 Route::group(['namespace' => 'API\V1'], function () {
-    Route::group(['middleware' => 'auth'], function () {
+    Route::group(['middleware' => 'auth:api'], function () {
         Route::apiResource('articles', 'ArticleController')->only([
             'store', 'update', 'destroy'
         ]);
@@ -33,8 +30,10 @@ Route::group(['namespace' => 'API\V1'], function () {
     Route::apiResource('articles', 'ArticleController')->only([
         'index', 'show'
     ]);
+
     Route::apiResource('users', 'UserController');
     Route::apiResource('categories', 'CategoryController');
     Route::post('login', 'AuthController@login')->name('auth.login');
+    
 });
 
