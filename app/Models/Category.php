@@ -10,4 +10,12 @@ class Category extends Model
     use SoftDeletes;
 
     protected $fillable = ['name'];
+
+    /**
+     * Get the articles in the category.
+     */
+    public function articles()
+    {
+        return $this->hasMany('App\Models\Article');
+    }
 }
