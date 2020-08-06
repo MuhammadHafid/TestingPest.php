@@ -19,16 +19,23 @@ use Illuminate\Support\Facades\Auth;
 Route::group(['namespace' => 'API\V1'], function () {
     Route::group(['middleware' => 'auth:api'], function () {
         Route::apiResource('articles', 'ArticleController')->only([
-            'store', 'update', 'destroy'
+            'store', 'update', 'destroy',
+        ]);
+
+        Route::apiResource('comments', 'CommentController')->only([
+            'store', 'destroy',
         ]);
 
         Route::post('me', 'AuthController@me')->name('auth.me');
 
         Route::post('logout', 'AuthController@logout')->name('auth.logout');
-    });     
+    });
 
     Route::apiResource('articles', 'ArticleController')->only([
-        'index', 'show'
+        'index', 'show',
+    ]);
+    Route::apiResource('comments', 'CommentController')->only([
+        'index', 'show',
     ]);
 
     Route::apiResource('users', 'UserController');
@@ -36,4 +43,3 @@ Route::group(['namespace' => 'API\V1'], function () {
     Route::post('login', 'AuthController@login')->name('auth.login');
     
 });
-
