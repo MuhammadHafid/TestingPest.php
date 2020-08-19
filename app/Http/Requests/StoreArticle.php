@@ -26,7 +26,8 @@ class StoreArticle extends FormRequest
         return [
             'title'         => 'required|string',
             'content'       => 'required|string',
-            'category_id'   => 'required|numeric|exists:categories,id'
+            'category_id'   => 'required|numeric|exists:categories,id',
+            'user_id'       => 'required|numeric|exists:users,id'
         ];
     }   
 }
