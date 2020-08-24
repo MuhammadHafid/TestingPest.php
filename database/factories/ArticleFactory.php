@@ -10,9 +10,10 @@ $factory->define(Article::class, function (Faker $faker) {
         'user_id' => function () {
             return factory(App\Models\User::class)->create()->id;
         },
-        'title' => $faker->words(10),
+        'title' => $faker->sentence(3),
         'content' => $faker->sentence(10),
-        'category_id' => $faker->randomNumber(1),
-        'id' => $faker->randomNumber(1),
-    ];
+        'category_id' => function () {
+            return factory(App\Models\Category::class)->create()->id;
+        },
+ ];
 });
